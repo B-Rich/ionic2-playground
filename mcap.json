@@ -1,0 +1,9 @@
+{
+  "name": "approval-sample-ionic2",
+  "baseAlias": "/approval-sample-ionic2",
+  "uuid": "d502ff00-e11e-11e5-a837-0800200c9a66",
+  "server": "./server/app.js",
+  "client": "./client/www/",
+  "directoryIndex": true,
+  "private": false
+}

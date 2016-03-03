@@ -1,0 +1,19 @@
+<form [ngFormModel]="formGroup" (ngSubmit)="onSubmit()">
+  <ion-list>
+    <ion-item>
+      <ion-label fixed>Username</ion-label>
+      <ion-input ngControl="username" [(ngModel)]="model.username" type="text" ></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label fixed>Password</ion-label>
+      <ion-input ngControl="password" [(ngModel)]="model.password" type="password"  ></ion-input>
+    </ion-item>
+  </ion-list>
+  <div padding>
+    <button small blue full type="submit" [disabled]="!formGroup.valid" >Einloggen</button>
+  </div>
+</form>
+  <pre>
+    {{value}}
+  </pre>
+<ion-list>
