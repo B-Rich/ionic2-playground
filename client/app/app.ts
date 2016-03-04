@@ -1,15 +1,27 @@
 import {App, Platform} from 'ionic-angular';
 import {LoginPage} from './pages/login/login';
-
 // https://angular.io/docs/ts/latest/api/core/Type-interface.html
 import {Type} from 'angular2/core';
+import {BrowserXhr, HTTP_PROVIDERS} from "angular2/http";
+import {Injectable, provide} from "angular2/core";
 
+//workarround for set credentials true
+//@link https://github.com/angular/http/issues/65
+@Injectable()
+class CORSBrowserXHR extends BrowserXhr {
+  build(): any {
+    var xhr: any = super.build();
+    xhr.withCredentials = true;
+    return xhr;
+  }
+}
 
 @App({
   template: '<ion-nav [root]="rootPage"></ion-nav>',
   config: {
     serverUrl: 'https://10.21.4.52'
-  }
+  },
+  providers: [HTTP_PROVIDERS, provide(BrowserXhr, { useClass: CORSBrowserXHR })]
 })
 export class MyApp {
   rootPage: Type = LoginPage;

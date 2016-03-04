@@ -60,7 +60,8 @@ gulp.task('sass', function(){
     .pipe(sass({
       includePaths: [
         IONIC_DIR,
-        'node_modules/ionicons/dist/scss'
+        'node_modules/ionicons/dist/scss',
+        'node_modules/bourbon/core'
       ]
     }))
     .on('error', function (err) {

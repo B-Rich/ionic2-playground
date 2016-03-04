@@ -11,7 +11,8 @@ module.exports = {
       dest: 'www/build/css',
       include: [
         'node_modules/ionic-angular',
-        'node_modules/ionicons/dist/scss'
+        'node_modules/ionicons/dist/scss',
+        'node_modules/bourbon/core'
       ]
     },
     fonts: {

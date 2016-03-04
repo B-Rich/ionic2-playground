@@ -6,7 +6,7 @@ import {Injectable, Inject} from 'angular2/core';
 @Injectable()
 export class User {
   constructor(
-      public username: string,
+      public userName: string,
       public password: string
   ) { }
 }
