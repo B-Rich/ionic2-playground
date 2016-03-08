@@ -4,13 +4,29 @@
  * available from the command line. All tasks are run using `gulp taskName`.
  ******************************************************************************/
 var gulp = require('gulp'),
-    webpack = require('webpack'),
-    sass = require('gulp-sass'),
-    autoprefixer = require('gulp-autoprefixer'),
-    watch = require('gulp-watch'),
-    sourcemap = require('gulp-sourcemaps'),
-    del = require('del');
+  webpack = require('webpack'),
+  sass = require('gulp-sass'),
+  autoprefixer = require('gulp-autoprefixer'),
+  watch = require('gulp-watch'),
+  sourcemap = require('gulp-sourcemaps'),
+  del = require('del'),
+  typedoc = require("gulp-typedoc");
 
+gulp.task("typedoc", function () {
+  return gulp
+    .src(["app/**/*.ts"])
+    .pipe(typedoc({
+      module: "commonjs",
+      target: "es5",
+      includeDeclarations: false,
+      experimentalDecorators: true,
+      ignoreCompilerErrors: false,
+      excludeExternals:true,
+      version: true,
+      out: "./../docs/",
+      name: "m-way Ionic2 Playground"
+    }));
+});
 
 var IONIC_DIR = "node_modules/ionic-angular/";
 
@@ -19,11 +35,11 @@ var IONIC_DIR = "node_modules/ionic-angular/";
  * watch
  * Build the app and watch for source file changes.
  ******************************************************************************/
-gulp.task('watch', ['sass', 'copy.fonts', 'copy.html'], function(done) {
-  watch('www/app/**/*.scss', function(){
+gulp.task('watch', ['sass', 'copy.fonts', 'copy.html'], function (done) {
+  watch('www/app/**/*.scss', function () {
     gulp.start('sass');
   });
-  watch('www/app/**/*.html', function(){
+  watch('www/app/**/*.html', function () {
     gulp.start('copy.html');
   });
   bundle(true, done);
@@ -34,7 +50,7 @@ gulp.task('watch', ['sass', 'copy.fonts', 'copy.html'], function(done) {
  * build
  * Build the app once, without watching for source file changes.
  ******************************************************************************/
-gulp.task('build', ['sass', 'copy.fonts', 'copy.html'], function(done) {
+gulp.task('build', ['sass', 'copy.fonts', 'copy.html'], function (done) {
   bundle(false, done);
 });
 
@@ -44,7 +60,7 @@ gulp.task('build', ['sass', 'copy.fonts', 'copy.html'], function(done) {
  * Convert Sass files to a single bundled CSS file. Uses auto-prefixer
  * to automatically add required vendor prefixes when needed.
  ******************************************************************************/
-gulp.task('sass', function(){
+gulp.task('sass', function () {
   var autoprefixerOpts = {
     browsers: [
       'last 2 versions',
@@ -77,7 +93,7 @@ gulp.task('sass', function(){
  * copy.fonts
  * Copy Ionic font files to build directory.
  ******************************************************************************/
-gulp.task('copy.fonts', function() {
+gulp.task('copy.fonts', function () {
   return gulp.src(IONIC_DIR + 'fonts/**/*.+(ttf|woff|woff2)')
     .pipe(gulp.dest('www/build/fonts'));
 });
@@ -87,7 +103,7 @@ gulp.task('copy.fonts', function() {
  * copy.html
  * Copy html files to build directory.
  ******************************************************************************/
-gulp.task('copy.html', function(){
+gulp.task('copy.html', function () {
   return gulp.src('app/**/*.html')
     .pipe(gulp.dest('www/build'));
 });
@@ -97,7 +113,7 @@ gulp.task('copy.html', function(){
  * clean
  * Delete previous build files.
  ******************************************************************************/
-gulp.task('clean', function(done) {
+gulp.task('clean', function (done) {
   del(['www/build'], done);
 });
 
@@ -128,7 +144,7 @@ function bundle(watch, cb) {
     compiler.run(compileHandler);
   }
 
-  function compileHandler(err, stats){
+  function compileHandler(err, stats) {
     if (firstTime) {
       firstTime = false;
       cb();

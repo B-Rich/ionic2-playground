@@ -1,3 +1,5 @@
+/// <reference path="../typings/main.d.ts" />
+
 import {App, Platform} from 'ionic-angular';
 import {LoginPage} from './pages/login/login';
 // https://angular.io/docs/ts/latest/api/core/Type-interface.html

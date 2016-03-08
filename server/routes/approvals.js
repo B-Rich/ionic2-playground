@@ -1,8 +1,6 @@
 'use strict';
 /**
  * routes/approvals.js
- * 
- *
  * Created by Thomas Beckmann on 02.03.2015
  * Copyright (c)
  * 2015

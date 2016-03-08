@@ -1,7 +1,6 @@
 'use strict';
 /**
  * providers/sample.js
- * IBX Approval Backend
  *
  * Created by Thomas Beckmann on 02.03.2015
  * Copyright (c)

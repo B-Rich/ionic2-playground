@@ -4,9 +4,9 @@ import {Config} from 'ionic-angular';
 import {User} from './../user/user';
 import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
+
 /*
   Generated class for the Login provider.
-
   See https://angular.io/docs/ts/latest/guide/dependency-injection.html
   for more info on providers and Angular 2 DI.
 */
