@@ -1,7 +1,7 @@
 import {Injectable, Inject} from 'angular2/core';
 import {Http, Response, Headers, RequestOptions} from 'angular2/http';
 import {Config} from 'ionic-angular';
-import {User} from './../user/user';
+import {LoginUser} from './../user/login-user';
 import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 
@@ -16,7 +16,7 @@ export class LoginProvider {
   private http: any = Http;
   private headers: Headers;
   private options: RequestOptions;
-  public model: any = User;
+  public model: any = LoginUser;
   public userResponse: any = null;
 
   constructor( http: Http, config: Config) {
@@ -27,7 +27,7 @@ export class LoginProvider {
 
   }
 
-  load(model: User) {
+  load(model: LoginUser) {
     this.model = model;
     if (this.userResponse) {
       // already loaded data
@@ -46,6 +46,7 @@ export class LoginProvider {
       );
     });
   }
+
   private handleError (error: Response) {
     // in a real world app, we may send the error to some remote logging infrastructure
     // instead of just logging it to the console

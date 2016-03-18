@@ -1,6 +1,6 @@
 import {Page, NavController} from 'ionic-angular';
 import {Inject} from 'angular2/core';
-import {LoginForm} from './login-form.component'
+import {LoginForm} from './../../components/login-form/login-form.component';
 
 /*
   Generated class for the LoginPage page.
