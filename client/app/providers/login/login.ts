@@ -1,4 +1,4 @@
-import {Injectable, Inject} from 'angular2/core';
+import {Injectable, Inject, EventEmitter} from 'angular2/core';
 import {Http, Response, Headers, RequestOptions} from 'angular2/http';
 import {Config} from 'ionic-angular';
 import {LoginUser} from './../user/login-user';
@@ -18,13 +18,13 @@ export class LoginProvider {
   private options: RequestOptions;
   public model: any = LoginUser;
   public userResponse: any = null;
+  public afterLogin: any = new EventEmitter();
 
   constructor( http: Http, config: Config) {
     this.url = (config.get('serverUrl') + this.url);
     this.http = http;
     this.headers = new Headers({ 'Content-Type': 'application/json' });
     this.options = new RequestOptions({ headers: this.headers });
-
   }
 
   load(model: LoginUser) {
@@ -40,6 +40,7 @@ export class LoginProvider {
         .subscribe(
         data => {
           this.userResponse = data;
+          this.afterLogin.next([true, this.userResponse]);
           resolve(this.userResponse);
         },
         err => this.handleError
@@ -51,6 +52,7 @@ export class LoginProvider {
     // in a real world app, we may send the error to some remote logging infrastructure
     // instead of just logging it to the console
     console.error(error);
+    this.afterLogin.next([false, error]);
     return Observable.throw(error.json().error || 'Server error');
   }
 }

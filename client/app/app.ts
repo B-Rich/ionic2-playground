@@ -7,6 +7,8 @@ import {Type} from 'angular2/core';
 import {BrowserXhr, HTTP_PROVIDERS} from "angular2/http";
 import {Injectable, provide} from "angular2/core";
 
+import {RelutionUserProvider} from './providers/relution/relution-user';
+import {LoginProvider} from './providers/login/login';
 //workarround for set credentials true
 //@link https://github.com/angular/http/issues/65
 @Injectable()
@@ -23,7 +25,7 @@ class CORSBrowserXHR extends BrowserXhr {
   config: {
     serverUrl: 'https://10.21.4.52'
   },
-  providers: [HTTP_PROVIDERS, provide(BrowserXhr, { useClass: CORSBrowserXHR })]
+  providers: [HTTP_PROVIDERS, provide(BrowserXhr, { useClass: CORSBrowserXHR }), RelutionUserProvider, LoginProvider]
 })
 export class MyApp {
   rootPage: Type = LoginPage;

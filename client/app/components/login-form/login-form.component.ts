@@ -1,4 +1,4 @@
-import {Component, Injectable} from 'angular2/core';
+import {Component, Injectable, EventEmitter} from 'angular2/core';
 import {IonicApp, IONIC_DIRECTIVES} from 'ionic-angular';
 import {Validators, Control, ControlGroup, FORM_DIRECTIVES, DefaultValueAccessor, ControlValueAccessor} from 'angular2/common';
 import {LoginUser} from './../../providers/user/login-user';
@@ -9,12 +9,12 @@ import {CircleLoader} from './../../components/loader/loader';
 @Injectable()
 @Component({
   selector: 'login-form',
+  outputs: ['afterLogin'],
   templateUrl: 'build/components/login-form/login-form.component.html',
-  directives: [FORM_DIRECTIVES, IONIC_DIRECTIVES, CircleLoader],
-  providers: [LoginProvider, RelutionUserProvider]
+  directives: [FORM_DIRECTIVES, IONIC_DIRECTIVES, CircleLoader]
 })
 export class LoginForm {
-
+  public afterLogin: any = new EventEmitter();
   public model = new LoginUser('admin', 'admin');
   public formGroup: ControlGroup;
   private submitted: boolean = false;
@@ -39,9 +39,9 @@ export class LoginForm {
     this.submitted = true;
     this.stateOnload = true;
     this.loginProvider.load(this.model).then(resp => {
-      RelutionUserProvider.user = resp.user;
+      this.relutionUser.user = resp.user;
       setTimeout(function() {
-        //RelutionUserProvider.user.get('type')
+        console.log(this.relutionUser.get('type'));
         this.stateOnload = false;
       }.bind(this), 500);
 
@@ -52,4 +52,5 @@ export class LoginForm {
   }
 
   get value(): string { return JSON.stringify(this.model, null, 2); }
+
 }

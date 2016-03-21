@@ -62,5 +62,8 @@ class RelutionUser{
 
 @Injectable()
 export class RelutionUserProvider{
-  public static user: RelutionUser;
+  public user: RelutionUser;
+  public get(key) {
+    return this.user[key];
+  }
 }
