@@ -22,6 +22,11 @@ export class UserPage {
     this.nav = nav;
     this.relutionUserProvider = RelutionUserProvider;
     console.log(this.relutionUserProvider);
+    let a = {'login':{}};
+    this.keys().forEach((key) => {
+      a.login[key] = '';
+    });
+    console.log( JSON.stringify(a, null, 2) ) ;
   }
 
   keys() : Array<string> {

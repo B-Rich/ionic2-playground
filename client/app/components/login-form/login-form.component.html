@@ -2,11 +2,11 @@
   <ion-list>
     <ion-item>
       <ion-label fixed>{{'login.Username' | translate}}</ion-label>
-      <ion-input ngControl="username" [(ngModel)]="model.userName" type="text"></ion-input>
+      <ion-input text-right ngControl="username" [(ngModel)]="model.userName" type="text"></ion-input>
     </ion-item>
     <ion-item>
       <ion-label fixed>{{'login.Password'|translate}}</ion-label>
-      <ion-input ngControl="password" [(ngModel)]="model.password" type="password"></ion-input>
+      <ion-input text-right ngControl="password" [(ngModel)]="model.password" type="password"></ion-input>
     </ion-item>
   </ion-list>
   <div padding>

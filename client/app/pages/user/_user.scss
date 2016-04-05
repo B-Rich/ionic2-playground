@@ -1,0 +1,13 @@
+.user {
+  ion-col{
+    &[text-right]{
+      text-overflow: ellipsis;
+      overflow: hidden;
+    }
+    &[text-left]{
+      span{
+        color: #ccc;
+      }
+    }
+  }
+}

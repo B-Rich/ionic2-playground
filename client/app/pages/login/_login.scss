@@ -1,0 +1,13 @@
+.login {
+  ion-row{
+    height: 100%;
+    width: 100%;
+    justify-content: center;
+    @media (min-width: 420px) {
+      width: 60%;
+      margin: 0 auto;
+      align-self: center;
+      align-content: center;
+    }
+  }
+}

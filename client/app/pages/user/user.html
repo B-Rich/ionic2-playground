@@ -1,15 +1,24 @@
 <ion-navbar *navbar >
   <ion-title>User</ion-title>
 </ion-navbar>
-<ion-content padding class="user">
+<ion-content class="user">
   <ion-list>
     <ion-item *ngFor="#attr of keys();var index = index;">
-      <span *ngIf="attr === 'lastLoggedTime'">
-        {{ 'user.' + attr | translate }} {{relutionUserProvider.user[attr]|date:'fullDate'}}
-      </span>
-      <span *ngIf="['lastLoggedTime', 'rolesObject'].indexOf(attr) === -1">
-        {{attr | translate }}: {{relutionUserProvider.user[attr]}}
-      </span>
+      <ion-row>
+        <ion-col text-left *ngIf="['rolesObjects'].indexOf(attr) === -1">
+          <span>
+            {{'user.' + attr | translate }}:
+          </span>
+        </ion-col>
+        <ion-col text-right>
+          <span *ngIf="attr === 'lastLoggedTime' || attr === 'passwordExpires'">
+            {{relutionUserProvider.user[attr]|date:'mediumDate'}}
+          </span>
+          <span *ngIf="['lastLoggedTime', 'rolesObjects', 'passwordExpires'].indexOf(attr) === -1">
+            {{relutionUserProvider.user[attr]}}
+          </span>
+        </ion-col>
+      </ion-row>
     </ion-item>
   </ion-list>
 </ion-content>

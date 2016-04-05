@@ -5,17 +5,15 @@ import {LoginProvider} from './../../providers/login/login';
 import {TranslatePipe} from 'ng2-translate/ng2-translate';
 import {RelutionUserProvider} from './../../providers/relution/relution-user';
 import {UserPage} from './../user/user';
-/*
-  Generated class for the LoginPage page.
 
-  See http://ionicframework.com/docs/v2/components/#navigation for more info on
-  Ionic pages and navigation.
-*/
 @Page({
   templateUrl: 'build/pages/login/login.html',
   directives: [LoginForm],
   pipes: [TranslatePipe]
 })
+/**
+ * The start page where user logged in
+ */
 export class LoginPage {
   public nav: any = NavController;
   public loginService: LoginProvider;

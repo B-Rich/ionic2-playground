@@ -1,9 +1,26 @@
 {
   "user": {
-    "email": "E-Mail"
+    "email": "E-Mail",
+    "type": "Typ",
+    "uuid": "UUid",
+    "version": "Version",
+    "aclEntries": "Berechtigungen",
+    "name": "Name",
+    "givenName": "Vorname",
+    "surname": "Nachname",
+    "organizationUuid": "Organization",
+    "lastLoggedTime": "Zuletzt eingeloggt",
+    "passwordExpires": "Passwort gültig bis",
+    "locked": "Gesperrt",
+    "activated": "Aktiv",
+    "effectivePermissions": "Benutzerrechte",
+    "sysRoles": "System Rolle",
+    "roles": "Rollen",
+    "readonly": "Nur lesen",
+    "rolesObjects": "Rollen Gruppen"
   },
   "login": {
-    "Username": "Benutzername",
+    "Username": "Benutzer",
     "Password": "Passwort",
     "Login": "einloggen"
   }

@@ -1,6 +1,23 @@
 {
   "user": {
-    "email": "E-Mail"
+    "email": "E-Mail",
+     "type": "",
+    "uuid": "",
+    "version": "",
+    "aclEntries": "",
+    "name": "",
+    "givenName": "",
+    "surname": "",
+    "organizationUuid": "",
+    "lastLoggedTime": "",
+    "passwordExpires": "",
+    "locked": "",
+    "activated": "",
+    "effectivePermissions": "",
+    "sysRoles": "",
+    "roles": "",
+    "readonly": "",
+    "rolesObjects": ""
   },
   "login": {
     "Username": "Username",

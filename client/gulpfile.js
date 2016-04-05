@@ -1,178 +1,67 @@
-/******************************************************************************
- * Gulpfile
- * Be sure to run `npm install` for `gulp` and the following tasks to be
- * available from the command line. All tasks are run using `gulp taskName`.
- ******************************************************************************/
 var gulp = require('gulp'),
-  webpack = require('webpack'),
-  sass = require('gulp-sass'),
-  autoprefixer = require('gulp-autoprefixer'),
-  watch = require('gulp-watch'),
-  sourcemap = require('gulp-sourcemaps'),
-  del = require('del'),
-  typedoc = require("gulp-typedoc");
+    gulpWatch = require('gulp-watch'),
+    del = require('del'),
+    argv = process.argv;
 
-gulp.task("typedoc", function () {
-  return gulp
-    .src(["app/**/*.ts"])
-    .pipe(typedoc({
-      module: "commonjs",
-      target: "es5",
-      includeDeclarations: false,
-      experimentalDecorators: true,
-      ignoreCompilerErrors: false,
-      excludeExternals:true,
-      version: true,
-      out: "./../docs/",
-      name: "m-way Ionic2 Playground"
-    }));
-});
+//     requireDir = require('require-dir');
 
-var IONIC_DIR = "node_modules/ionic-angular/";
+// requireDir('./gulp-task');
+
+// /******************************************************************************
+//  * copy.images
+//  * Copy copy images files to build directory.
+//  ******************************************************************************/
+// gulp.task('copy.images', function() {
+//   return gulp.src('app/**/*.+(png|jpg|svg|gif|jpeg)')
+//     .pipe(gulp.dest('www/build'));
+// });
+
+// /******************************************************************************
+//  * copy.json
+//  * Copy json files to build directory.
+//  ******************************************************************************/
+// gulp.task('copy.json', ['clean'], function(){
+//   return gulp.src('app/**/*.json')
+//     .pipe(gulp.dest('www/'));
+// });
+
+
+
+/**
+ * Ionic hooks
+ * Add ':before' or ':after' to any Ionic project command name to run the specified
+ * tasks before or after the command.
+ */
 gulp.task('serve:before', ['watch']);
+gulp.task('emulate:before', ['build']);
+gulp.task('deploy:before', ['build']);
+gulp.task('build:before', ['build']);
 
-/******************************************************************************
- * watch
- * Build the app and watch for source file changes.
- ******************************************************************************/
-gulp.task('watch', ['sass', 'copy.fonts', 'copy.html', 'copy.json', 'copy.images'], function (done) {
-  watch('www/app/**/*.scss', function () {
-    gulp.start('sass');
-  });
-  watch('www/app/**/*.json', function () {
-    gulp.start('copy.json');
-  });
-  watch('www/app/**/*.+(png|jpg|svg|gif|jpeg)', function () {
-    gulp.start('copy.images');
-  });
-  watch('www/app/**/*.html', function () {
-    gulp.start('copy.html');
-  });
-  bundle(true, done);
+// we want to 'watch' when livereloading
+var shouldWatch = argv.indexOf('-l') > -1 || argv.indexOf('--livereload') > -1;
+gulp.task('run:before', [shouldWatch ? 'watch' : 'build']);
+
+var buildBrowserify = require('ionic-gulp-browserify-typescript');
+var buildSass = require('ionic-gulp-sass-build');
+var copyHTML = require('ionic-gulp-html-copy');
+var copyFonts = require('ionic-gulp-fonts-copy');
+var copyScripts = require('ionic-gulp-scripts-copy');
+//
+var standard = ['sass', 'html', 'fonts', 'scripts'];
+
+gulp.task('watch', standard, function(){
+  gulpWatch('app/**/*.scss', function(){ gulp.start('sass'); });
+  gulpWatch('app/**/*.html', function(){ gulp.start('html'); });
+  gulpWatch('app/**/*.json', function(){ gulp.start('copy.json'); });
+
+  return buildBrowserify({ watch: true });
 });
 
-
-/******************************************************************************
- * build
- * Build the app once, without watching for source file changes.
- ******************************************************************************/
-gulp.task('build', ['sass', 'copy.fonts', 'copy.html', 'copy.json', 'copy.images'], function (done) {
-  bundle(false, done);
+gulp.task('build', standard, buildBrowserify);
+gulp.task('sass', buildSass);
+gulp.task('html', copyHTML);
+gulp.task('fonts', copyFonts);
+gulp.task('scripts', copyScripts);
+gulp.task('clean', function(done){
+  del('www/build', done);
 });
-
-
-/******************************************************************************
- * sass
- * Convert Sass files to a single bundled CSS file. Uses auto-prefixer
- * to automatically add required vendor prefixes when needed.
- ******************************************************************************/
-gulp.task('sass', function () {
-  var autoprefixerOpts = {
-    browsers: [
-      'last 2 versions',
-      'iOS >= 7',
-      'Android >= 4',
-      'Explorer >= 10',
-      'ExplorerMobile >= 11'
-    ],
-    cascade: false
-  };
-
-  return gulp.src('app/theme/app.+(ios|md).scss')
-    .pipe(sass({
-      includePaths: [
-        IONIC_DIR,
-        'node_modules/ionicons/dist/scss',
-        'node_modules/bourbon/core'
-      ]
-    }))
-    .on('error', function (err) {
-      console.error(err.message);
-      this.emit('end');
-    })
-    .pipe(autoprefixer(autoprefixerOpts))
-    .pipe(gulp.dest('www/build/css'));
-});
-
-
-/******************************************************************************
- * copy.fonts
- * Copy Ionic font files to build directory.
- ******************************************************************************/
-gulp.task('copy.fonts', function () {
-  return gulp.src(IONIC_DIR + 'fonts/**/*.+(ttf|woff|woff2)')
-    .pipe(gulp.dest('www/build/fonts'));
-});
-
-
-/******************************************************************************
- * copy.html
- * Copy html files to build directory.
- ******************************************************************************/
-gulp.task('copy.html', function () {
-  return gulp.src('app/**/*.html')
-    .pipe(gulp.dest('www/build'));
-});
-
-
-/******************************************************************************
- * clean
- * Delete previous build files.
- ******************************************************************************/
-gulp.task('clean', function (done) {
-  del(['www/build'], done);
-});
-
-/******************************************************************************
- * copy.images
- * Copy copy images files to build directory.
- ******************************************************************************/
-gulp.task('copy.images', function() {
-  return gulp.src('app/**/*.+(png|jpg|svg|gif|jpeg)')
-    .pipe(gulp.dest('www/build'));
-});
-
-/******************************************************************************
- * copy.json
- * Copy json files to build directory.
- ******************************************************************************/
-gulp.task('copy.json', function(){
-  return gulp.src('app/**/*.json')
-    .pipe(gulp.dest('www/build'));
-});
-/******************************************************************************
- * Bundle
- * Transpiles source files and bundles them into build directory using webpack.
- ******************************************************************************/
-function bundle(watch, cb) {
-  // prevent gulp calling done callback more than once when watching
-  var firstTime = true;
-
-  // load webpack config
-  var config = require('./webpack.config.js');
-
-  // https://github.com/webpack/docs/wiki/node.js-api#statstojsonoptions
-  var statsOptions = {
-    'colors': true,
-    'modules': false,
-    'chunks': false,
-    'exclude': ['node_modules']
-  }
-
-  var compiler = webpack(config);
-  if (watch) {
-    compiler.watch(null, compileHandler);
-  } else {
-    compiler.run(compileHandler);
-  }
-
-  function compileHandler(err, stats) {
-    if (firstTime) {
-      firstTime = false;
-      cb();
-    }
-
-    // print build stats and errors
-    console.log(stats.toString(statsOptions));
-  }
-}
