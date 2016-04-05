@@ -1,5 +1,4 @@
-/// <reference path="../typings/main.d.ts" />
-
+import 'es6-shim';
 import {App, Platform} from 'ionic-angular';
 import {LoginPage} from './pages/login/login';
 // https://angular.io/docs/ts/latest/api/core/Type-interface.html
@@ -45,7 +44,7 @@ export class MyApp {
       //
       // For example, we might change the StatusBar color. This one below is
       // good for dark backgrounds and light text:
-      // StatusBar.setStyle(StatusBar.LIGHT_CONTENT)
+      StatusBar.setStyle(StatusBar.LIGHT_CONTENT)
     });
   }
 }

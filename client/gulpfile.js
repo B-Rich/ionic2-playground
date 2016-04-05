@@ -29,7 +29,7 @@ gulp.task("typedoc", function () {
 });
 
 var IONIC_DIR = "node_modules/ionic-angular/";
-
+gulp.task('serve:before', ['watch']);
 
 /******************************************************************************
  * watch
