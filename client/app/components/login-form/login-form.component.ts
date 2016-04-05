@@ -1,6 +1,8 @@
 import {Component, Injectable, EventEmitter} from 'angular2/core';
 import {IonicApp, IONIC_DIRECTIVES} from 'ionic-angular';
 import {Validators, Control, ControlGroup, FORM_DIRECTIVES, DefaultValueAccessor, ControlValueAccessor} from 'angular2/common';
+import {TranslatePipe} from 'ng2-translate/ng2-translate';
+
 import {LoginUser} from './../../providers/user/login-user';
 import {LoginProvider} from './../../providers/login/login';
 import {RelutionUserProvider} from './../../providers/relution/relution-user';
@@ -10,6 +12,7 @@ import {CircleLoader} from './../../components/loader/loader';
 @Component({
   selector: 'login-form',
   outputs: ['afterLogin'],
+  pipes: [TranslatePipe],
   templateUrl: 'build/components/login-form/login-form.component.html',
   directives: [FORM_DIRECTIVES, IONIC_DIRECTIVES, CircleLoader]
 })

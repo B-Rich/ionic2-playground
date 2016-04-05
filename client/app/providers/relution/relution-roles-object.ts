@@ -16,7 +16,7 @@ export class RelutionRolesObject {
   public name: string;
   public groupType: string;
   public systemPermission: boolean;
-  constructor(...attr){
+  constructor(attr){
 
   }
 }

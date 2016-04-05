@@ -35,9 +35,15 @@ gulp.task('serve:before', ['watch']);
  * watch
  * Build the app and watch for source file changes.
  ******************************************************************************/
-gulp.task('watch', ['sass', 'copy.fonts', 'copy.html'], function (done) {
+gulp.task('watch', ['sass', 'copy.fonts', 'copy.html', 'copy.json', 'copy.images'], function (done) {
   watch('www/app/**/*.scss', function () {
     gulp.start('sass');
+  });
+  watch('www/app/**/*.json', function () {
+    gulp.start('copy.json');
+  });
+  watch('www/app/**/*.+(png|jpg|svg|gif|jpeg)', function () {
+    gulp.start('copy.images');
   });
   watch('www/app/**/*.html', function () {
     gulp.start('copy.html');
@@ -50,7 +56,7 @@ gulp.task('watch', ['sass', 'copy.fonts', 'copy.html'], function (done) {
  * build
  * Build the app once, without watching for source file changes.
  ******************************************************************************/
-gulp.task('build', ['sass', 'copy.fonts', 'copy.html'], function (done) {
+gulp.task('build', ['sass', 'copy.fonts', 'copy.html', 'copy.json', 'copy.images'], function (done) {
   bundle(false, done);
 });
 
@@ -117,7 +123,23 @@ gulp.task('clean', function (done) {
   del(['www/build'], done);
 });
 
+/******************************************************************************
+ * copy.images
+ * Copy copy images files to build directory.
+ ******************************************************************************/
+gulp.task('copy.images', function() {
+  return gulp.src('app/**/*.+(png|jpg|svg|gif|jpeg)')
+    .pipe(gulp.dest('www/build'));
+});
 
+/******************************************************************************
+ * copy.json
+ * Copy json files to build directory.
+ ******************************************************************************/
+gulp.task('copy.json', function(){
+  return gulp.src('app/**/*.json')
+    .pipe(gulp.dest('www/build'));
+});
 /******************************************************************************
  * Bundle
  * Transpiles source files and bundles them into build directory using webpack.

@@ -2,6 +2,7 @@ import {Page, NavController} from 'ionic-angular';
 import {Inject} from 'angular2/core';
 import {LoginForm} from './../../components/login-form/login-form.component';
 import {LoginProvider} from './../../providers/login/login';
+import {TranslatePipe} from 'ng2-translate/ng2-translate';
 import {RelutionUserProvider} from './../../providers/relution/relution-user';
 import {UserPage} from './../user/user';
 /*
@@ -12,7 +13,8 @@ import {UserPage} from './../user/user';
 */
 @Page({
   templateUrl: 'build/pages/login/login.html',
-  directives: [LoginForm]
+  directives: [LoginForm],
+  pipes: [TranslatePipe]
 })
 export class LoginPage {
   public nav: any = NavController;

@@ -1,17 +1,17 @@
 <form [ngFormModel]="formGroup" (ngSubmit)="onSubmit()">
   <ion-list>
     <ion-item>
-      <ion-label fixed>Username</ion-label>
+      <ion-label fixed>{{'login.Username' | translate}}</ion-label>
       <ion-input ngControl="username" [(ngModel)]="model.userName" type="text"></ion-input>
     </ion-item>
     <ion-item>
-      <ion-label fixed>Password</ion-label>
+      <ion-label fixed>{{'login.Password'|translate}}</ion-label>
       <ion-input ngControl="password" [(ngModel)]="model.password" type="password"></ion-input>
     </ion-item>
   </ion-list>
   <div padding>
     <button small blue full type="submit" [disabled]="!formGroup.valid">
-      Einloggen <circle-loader [hidden]="!stateOnload"></circle-loader>
+      {{'login.Login'|translate}} <circle-loader [hidden]="!stateOnload"></circle-loader>
     </button>
   </div>
 </form>
